@@ -5,6 +5,7 @@ library(tidyverse)
 library(visdat)
 
 server <- function(input, output,session) {
+  rm(list=ls())
   output$distPlot <- renderPlot({
     # generate bins based on input$bins from ui.R
     x    <- faithful[, 2]
