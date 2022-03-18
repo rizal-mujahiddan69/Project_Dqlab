@@ -26,6 +26,6 @@ server <- function(input, output) {
     hist(x, breaks = bins, col = 'darkgray', border = 'white')
   })
   output$Plotting <- renderPlot({
-    vis_miss(data_src)
+    plot(data_src$year,data_src$value)
   })
 }
