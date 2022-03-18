@@ -6,11 +6,6 @@ library(visdat)
 
 server <- function(input, output,session) {
   # rm(list=ls())
-  autoInvalidate <- reactiveTimer(10000)
-  observe({
-    autoInvalidate()
-    cat(".")
-  })
   
   output$distPlot <- renderPlot({
     # generate bins based on input$bins from ui.R
@@ -21,7 +16,9 @@ server <- function(input, output,session) {
     hist(x, breaks = bins, col = 'darkgray', border = 'white')
   })
   output$Plotting <- renderPlot({
-    plot(c(2,3,4),c(2,3,4))
+    x <- rnorm(100,sd=3)
+    y <- rnorm(100,sd=3)
+    plot(x,y)
   })
   session$allowReconnect(TRUE)
 }
