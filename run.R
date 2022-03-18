@@ -1,8 +1,6 @@
 library(shiny)
 
 
-rm(list=ls())
-
 port <- Sys.getenv('PORT')
 
 shiny::runApp(
