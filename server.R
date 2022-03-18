@@ -5,7 +5,13 @@ library(tidyverse)
 library(visdat)
 
 server <- function(input, output,session) {
-  rm(list=ls())
+  # rm(list=ls())
+  autoInvalidate <- reactiveTimer(10000)
+  observe({
+    autoInvalidate()
+    cat(".")
+  })
+  
   output$distPlot <- renderPlot({
     # generate bins based on input$bins from ui.R
     x    <- faithful[, 2]
