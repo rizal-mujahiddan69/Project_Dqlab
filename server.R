@@ -16,7 +16,7 @@ data_src$year <-  as.numeric(data_src$year)
 
 
 
-server <- function(input, output) {
+server <- function(input, output,session) {
   output$distPlot <- renderPlot({
     # generate bins based on input$bins from ui.R
     x    <- faithful[, 2]
@@ -28,4 +28,5 @@ server <- function(input, output) {
   output$Plotting <- renderPlot({
     plot(data_src$year,data_src$value)
   })
+  session$allowReconnect(TRUE)
 }
