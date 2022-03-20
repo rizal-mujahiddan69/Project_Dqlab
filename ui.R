@@ -6,7 +6,7 @@ source("analisis.R")
 ui <- fluidPage(
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", 
-              href = "www/bootstrap.css")
+              href = "bootstrap.css")
   ),
   tags$h1(textOutput("rizal"),align="center"),
   navbarPage("Menu",
