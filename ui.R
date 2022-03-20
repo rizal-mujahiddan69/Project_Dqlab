@@ -4,6 +4,10 @@ source("analisis.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", 
+              href = "www/bootstrap.css")
+  ),
   tags$h1(textOutput("rizal"),align="center"),
   navbarPage("Menu",
     tabPanel("Pendahuluan",
@@ -14,7 +18,14 @@ ui <- fluidPage(
           tags$li("TTD    : Depok, 6 April 2001"),
           tags$li("Status : Belum Menikah"),
         ),
-        tags$p("Project Kali ini memmbuktikan Bahwa Formulasi tersebut bisa")
+        tags$p(paste("Project Kali ini membuktikan Bahwa ",
+                     "Sebenarnya Pendapatan Wisata bisa mempengaruhi",
+                     "GDP di Suatu masyarakat secara luas ",sep=" "))
+      ),
+      tags$div(
+        tags$p(style = "border : 5px solid red;" ,
+          "Dengan Penulis Hipotesis Bahwa pendapatan Wisata korelasi dengan GDP"
+        )
       )
     ),
     tabPanel("Plot Lineku",
