@@ -8,10 +8,10 @@ ui <- fluidPage(
     tags$link(rel = "stylesheet", type = "text/css", 
               href = "bootstrap.css")
   ),
-  tags$h1(textOutput("rizal"),align="center"),
+  tags$h1(textOutput("rizal"),align="center",class="thetitle"),
   navbarPage("Menu",
     tabPanel("Pendahuluan",
-      tags$div(
+      tags$div( class="diving",
         tags$p("Kenalkan Nama Saya Rizal Mujahiddan. Identitas Saya adalah"),
         tags$ul( 
           tags$li("Nama   : Rizal Mujahiddan"),
