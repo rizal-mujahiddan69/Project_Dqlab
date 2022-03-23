@@ -58,3 +58,14 @@ img.roundImage {
   transform : translate(-50%,-50%);
   font-size: 50px;
 }
+
+
+.rounded {
+  border-radius:50% !important; 
+}
+
+
+.bordering{
+   border-radius: 20% !important;
+   border : 5px solid red;
+}
