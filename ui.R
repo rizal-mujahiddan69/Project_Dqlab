@@ -11,16 +11,27 @@ ui <- fluidPage(
   tags$h1(textOutput("rizal"),align="center",class="thetitle"),
   navbarPage("Menu",
     tabPanel("Pendahuluan",
-      tags$div( class="diving",
-        tags$p("Kenalkan Nama Saya Rizal Mujahiddan. Identitas Saya adalah"),
-        tags$ul( 
-          tags$li("Nama   : Rizal Mujahiddan"),
-          tags$li("TTD    : Depok, 6 April 2001"),
-          tags$li("Status : Belum Menikah"),
+      fluidRow(
+        column(3,
+          tags$p(
+            tags$img(width = 250,src = "image/Rizalku.jpg",
+                     class="roundImage")
+          )
         ),
-        tags$p(paste("Project Kali ini membuktikan Bahwa ",
-                     "Sebenarnya Pendapatan Wisata bisa mempengaruhi",
-                     "GDP di Suatu masyarakat secara luas ",sep=" "))
+        column(9,
+          tags$div(class="diving",
+            tags$p("Rizal Mujahiddan",
+            class = "childiv"),
+            #tags$ul( 
+            #  tags$li("Nama   : Rizal Mujahiddan"),
+            #  tags$li("TTD    : Depok, 6 April 2001"),
+            #  tags$li("Status : Belum Menikah"),
+            #),
+            #tags$p(paste("Project Kali ini membuktikan Bahwa ",
+            #             "Sebenarnya Pendapatan Wisata bisa mempengaruhi",
+            #             "GDP di Suatu masyarakat secara luas ",sep=" "))
+          )
+        )
       ),
       tags$div(
         tags$p(style = "border : 5px solid red;" ,
