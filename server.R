@@ -12,7 +12,7 @@ server <- function(input, output,session) {
     "Menu aku"
   })
   
-  output$PlotLine <- renderPlotly({
+  output$PlotLine <- renderPlot({
     kol_pen <- input$kolom
     pltku<- ggplot(data_sheet,aes(x=year,y=get(kol_pen))) + 
       geom_line(size=1) + 
@@ -25,10 +25,10 @@ server <- function(input, output,session) {
             axis.text.y  = element_text(margin = margin(t = 0, r = 0, 
                                                         b = 0, l = 20))
             )
-    ggplotly(pltku) %>% config(displayModeBar = F)
+      pltku
     })
   
-  output$PlotLine2 <- renderPlotly({
+  output$PlotLine2 <- renderPlot({
     kol_pen <- input$kolom2
     plottku <-ggplot(data_sheet,aes(x=year,y=get(kol_pen))) + 
       geom_line(size=1) + 
@@ -41,7 +41,7 @@ server <- function(input, output,session) {
             axis.text.y  = element_text(margin = margin(t = 0, r = 0, 
                                                         b = 0, l = 20))
       )
-    ggplotly(plottku) %>% config(displayModeBar = F)
+    plottku
   })
   
   output$crccf <- renderPlot({
@@ -52,12 +52,11 @@ server <- function(input, output,session) {
     data_metadata
   })
   
-  output$linearreg <- renderPlotly({
-    ggplotly(ggplot(data_sheet,aes(x=International.tourism.number.of.arrivals,
+  output$linearreg <- renderPlot({
+    ggplot(data_sheet,aes(x=International.tourism.number.of.arrivals,
                           y=GDP.per.capita.current.US.))+
               geom_point() +
               geom_smooth(method = "lm")
-          ) %>% config(displayModeBar = F)
   })
   
   # output$MapPlot <- renderLeaflet({

@@ -1,6 +1,5 @@
 library(shiny)
 library(leaflet)
-library(plotly)
 
 source("analisis.R")
 
@@ -34,7 +33,10 @@ ui <- fluidPage(
                 tags$li(tags$span("e-mail"),tags$span("rizal.mujahiddan@gmail.com")) ,
                 tags$li(tags$span("Linkedin"),tags$span("Rizal Mujahiddan"))
               )
-            )
+            ),
+            tags$button(onclick="location.href='https://github.com/rizal-mujahiddan69/Project_Dqlab';",type="button",
+                        class="btn btn-warning","My Github"),
+            
           )
         )
       ),
@@ -59,7 +61,7 @@ ui <- fluidPage(
                       names(data_sheet)[-c(1)])
         ),
         mainPanel("",
-          plotlyOutput("PlotLine")
+          plotOutput("PlotLine")
         )
       ),
       sidebarLayout(       
@@ -68,7 +70,7 @@ ui <- fluidPage(
                       names(data_sheet)[-c(1)])
         ),
         mainPanel("",
-          plotlyOutput("PlotLine2")
+          plotOutput("PlotLine2")
           
         )
       )
@@ -99,7 +101,7 @@ ui <- fluidPage(
     # ),
     tabPanel("Main Plot",
       mainPanel("Tugas",
-        plotlyOutput("linearreg"),
+        plotOutput("linearreg"),
         plotOutput("crccf"),
         textOutput("lm_diag"),
         textOutput("tulisan_auto"),

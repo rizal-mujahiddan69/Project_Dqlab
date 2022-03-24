@@ -1,41 +1,32 @@
 library(mice)
 library(readxl)
 library(tidyverse)
-library(visdat)
-library(leaflet)
+#library(leaflet)
 library(jsonlite)
-library(timetk)
 library(lmtest)
 library(dLagM)
 library(forecast)
 
+data_sheet <- read_excel("Data_Indonesia.xls",sheet="Data",skip=2)
+names(data_sheet) <- make.names(names(data_sheet))
+data_sheet <- data_sheet %>% select(-c("Indicator.Code",
+                                       "Country.Code","Country.Name"))
 
-data_sheet <- function(){
-  data_aku <- read_excel("Data_Indonesia.xls",sheet="Data",skip=2)
-  names(data_aku) <- make.names(names(data_aku))
-  data_aku <- data_aku %>% select(-c("Indicator.Code",
-                                     "Country.Code","Country.Name"))
-  
-  yearku <- names(data_aku)[-c(1)]
-  data_aku <- data_aku %>% pivot_longer(yearku,names_to = "year")
-  
-  data_aku$year <- sapply(data_aku$year,function(x){substr(x,2,nchar(x))})
-  data_aku$year <- as.numeric(data_aku$year)
-  data_aku <- data_aku %>% 
-    pivot_wider(names_from = Indicator.Name,
-                values_from = value)
-  
-  names(data_aku) <- make.names(names(data_aku))
-  names(data_aku) <- str_replace_all(names(data_aku),"(\\.){2,}",".")
-  data_aku <- data.frame(data_aku)
-  rownames(data_aku) <- data_aku$year
-  data_aku <- as_tibble(data_aku)
-  data_aku <- data_aku %>% select_if(~!all(is.na(.)))
-  data_aku
-}
+yearku <- names(data_sheet)[-c(1)]
+data_sheet <- data_sheet %>% pivot_longer(yearku,names_to = "year")
 
-data_sheet <- data_sheet()
+data_sheet$year <- sapply(data_sheet$year,function(x){substr(x,2,nchar(x))})
+data_sheet$year <- as.numeric(data_sheet$year)
+data_sheet <- data_sheet %>% 
+  pivot_wider(names_from = Indicator.Name,
+              values_from = value)
 
+names(data_sheet) <- make.names(names(data_sheet))
+names(data_sheet) <- str_replace_all(names(data_sheet),"(\\.){2,}",".")
+data_sheet <- data.frame(data_sheet)
+rownames(data_sheet) <- data_sheet$year
+data_sheet <- as_tibble(data_sheet)
+data_sheet <- data_sheet %>% select_if(~!all(is.na(.)))
 
 data_metadata <- read_excel("Data_Indonesia.xls",
                             sheet="Metadata - Indicators")
@@ -44,22 +35,22 @@ data_metadata <- data_metadata %>%
                     select(-c(INDICATOR_CODE,SOURCE_ORGANIZATION))
 
 
-data_world <- read_excel("Data_World.xlsx",sheet="Data")
-names(data_world) <- make.names(names(data_world))
-
-peletakan <- str_extract(names(data_world)[5:length(data_world)],"(\\d)+")
-peletakan <- c(names(data_world)[1:4],peletakan)
-colnames(data_world) <- peletakan
-
-data_world_gdp <- data_world %>% 
-  select(-c(Country.Code,`Series.Code`)) %>% 
-  filter(Series.Name == "GDP per capita (current US$)") %>% 
-  select(-c(Series.Name))
-
-
-for(kolomku in (names(data_world_gdp)[3:dim(data_world_gdp)[2]])){
-  data_world_gdp[[kolomku]] <- as.numeric(data_world_gdp[[kolomku]])
-} 
+# data_world <- read_excel("Data_World.xlsx",sheet="Data")
+# names(data_world) <- make.names(names(data_world))
+# 
+# peletakan <- str_extract(names(data_world)[5:length(data_world)],"(\\d)+")
+# peletakan <- c(names(data_world)[1:4],peletakan)
+# colnames(data_world) <- peletakan
+# 
+# data_world_gdp <- data_world %>% 
+#   select(-c(Country.Code,`Series.Code`)) %>% 
+#   filter(Series.Name == "GDP per capita (current US$)") %>% 
+#   select(-c(Series.Name))
+# 
+# 
+# for(kolomku in (names(data_world_gdp)[3:dim(data_world_gdp)[2]])){
+#   data_world_gdp[[kolomku]] <- as.numeric(data_world_gdp[[kolomku]])
+# } 
 
 
 y_hitung = data_sheet$GDP.per.capita.current.US.
@@ -132,7 +123,3 @@ summary(koyck_model)
 #     list_negara$features[[negara]]$properties$gdp_per_capita_us[[namanya]] <- negara_tahun 
 #   }
 # }
-
-
-
-
