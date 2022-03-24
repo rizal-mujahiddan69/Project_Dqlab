@@ -1,5 +1,4 @@
 library(shiny)
-library(leaflet)
 source("analisis.R")
 
 server <- function(input, output,session) {

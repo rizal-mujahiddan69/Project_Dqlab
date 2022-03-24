@@ -1,6 +1,4 @@
 library(shiny)
-library(leaflet)
-
 source("analisis.R")
 
 # Define UI for application that draws a histogram
