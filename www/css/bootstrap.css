@@ -69,3 +69,14 @@ img.roundImage {
    border-radius: 20% !important;
    border : 5px solid red;
 }
+
+.shadowing {
+  padding :20px;
+  border-radius: 5%;
+  box-shadow: 5px 5px grey;
+  margin:50px;
+}
+
+a, u {
+  text-decoration: none;
+}

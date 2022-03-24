@@ -5,7 +5,8 @@
 #
 
 my_packages = c("caret", "ggplot2","visdat","tidyverse","readxl",
-                "magrittr","Rcpp")
+                "magrittr","Rcpp","leaflet","jsonlite","timetk",
+                "plotly","lmtest","dLagM")
 install_if_missing = function(p) {
   if (p %in% rownames(installed.packages()) == FALSE) {
     install.packages(p)

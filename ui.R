@@ -1,12 +1,14 @@
 library(shiny)
-source("analisis.R")
+library(leaflet)
+library(plotly)
 
+source("analisis.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
   tags$head(
     tags$link(rel="stylesheet",
-    href = "https://fonts.googleapis.com/css2?family=Material+Icons"),
+    href = "https://fonts.googleapis.com/icon?family=Material+Icons"),
     tags$link(rel = "stylesheet", type = "text/css", 
               href = "css/bootstrap.css"),
     tags$script(type="text/javascript",src="js/script.js")
@@ -28,19 +30,27 @@ ui <- fluidPage(
                         class="btn btn-success","Reveal"),
             tags$div(id="shower",style="display:none;",
               tags$ul(style="list-style-type:none;",
-                tags$li(tags$span("Instagram")),
-                tags$li("rizal.mujahiddan@gmail.com"),
-                tags$li("Rizal Mujahiddan")
+                tags$li(tags$span("Instagram"),tags$span("Rizal Mujahiddan")),
+                tags$li(tags$span("e-mail"),tags$span("rizal.mujahiddan@gmail.com")) ,
+                tags$li(tags$span("Linkedin"),tags$span("Rizal Mujahiddan"))
               )
             )
           )
         )
       ),
-      tags$div(
-        tags$p(style = "border : 5px solid red; "
-          ,"Dengan Penulis Hipotesis Bahwa pendapatan Wisata korelasi dengan GDP"
-        )
-      )
+      tags$div(class="row",
+        tags$div(class="card bg-info shadowing",
+          "Disini, Penulis akan mencari korelasi antara banyaknya wisatawan 
+          dengan Pendapatan nasional. Untuk data Sendiri, penulis didapatkan dari
+          data world bank. Disini variable independent adalah International 
+          tourism number of arrivals , dan variable dependent adalah
+          GDP per capita current US .Berikut ini adalah Metadata. ",
+          tags$a(href="https://infopublik.id/kategori/nasional-ekonomi-bisnis/599397/wisatawan-nusantara-jadi-andalan-pemulihan-sektor-pariwisata-nasional",
+                 "Ini adalah Berita mengenai jurnalisme")
+          ),
+
+        ),
+        tags$div(dataTableOutput("table_metadata"))
     ),
     tabPanel("Plot Lineku",
       sidebarLayout(       
@@ -49,13 +59,52 @@ ui <- fluidPage(
                       names(data_sheet)[-c(1)])
         ),
         mainPanel("",
-          plotOutput("PlotLine")
+          plotlyOutput("PlotLine")
+        )
+      ),
+      sidebarLayout(       
+        sidebarPanel(
+          selectInput("kolom2", "Indicator Name",
+                      names(data_sheet)[-c(1)])
+        ),
+        mainPanel("",
+          plotlyOutput("PlotLine2")
+          
         )
       )
     ),
+    # tabPanel("Map Plot",
+    #   sidebarLayout(
+    #     sidebarPanel(
+    #       selectInput("kolom_tahun","Rizal Ganteng",
+    #                   names(data_world_gdp)[-c(1)])
+    #     )
+    #   ),
+    #   mainPanel("GDP",
+    #     leafletOutput("MapPlot")
+    #   )
+    # ),
+    
+    
+    #  tabPanel("Pie Plot",
+    #    sidebarLayout(
+    #      sidebarPanel(
+    #        selectInput("kolom_tahun","Rizal Ganteng",
+    #                    names(data_world_gdp)[-c(1)])
+    #      )
+    #    ),
+    #    mainPanel("GDP",
+    #      leafletOutput("PiePlot")
+    #    )
+    # ),
     tabPanel("Main Plot",
       mainPanel("Tugas",
-        plotOutput("Forecast")      
+        plotlyOutput("linearreg"),
+        plotOutput("crccf"),
+        textOutput("lm_diag"),
+        textOutput("tulisan_auto"),
+        img(src="image/Hasil_Koyck.png"),
+        textOutput("kesimpulan")
       )
     ),
   ),
