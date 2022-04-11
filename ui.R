@@ -98,7 +98,7 @@ ui <- fluidPage(
     #    )
     # ),
     tabPanel("Main Plot",
-      mainPanel("Tugas",
+      mainPanel(tags$h1("Tugas"),
         plotOutput("linearreg"),
         plotOutput("crccf"),
         textOutput("lm_diag"),

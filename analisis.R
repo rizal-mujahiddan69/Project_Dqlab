@@ -1,14 +1,19 @@
-library(mice)
-library(readxl)
-library(tidyverse)
-#library(leaflet)
-library(jsonlite)
-library(lmtest)
-library(dLagM)
-library(forecast)
+library("mice")
+library("readxl")
+library("tidyverse")
+library("leaflet")
+library("jsonlite")
+library("lmtest")
+library("dLagM")
+library("forecast")
+library("shiny")
+library("magrittr")
+library("ggplot2")
 
 data_sheet <- read_excel("Data_Indonesia.xls",sheet="Data",skip=2)
 names(data_sheet) <- make.names(names(data_sheet))
+
+
 data_sheet <- data_sheet %>% select(-c("Indicator.Code",
                                        "Country.Code","Country.Name"))
 
@@ -28,29 +33,29 @@ rownames(data_sheet) <- data_sheet$year
 data_sheet <- as_tibble(data_sheet)
 data_sheet <- data_sheet %>% select_if(~!all(is.na(.)))
 
-data_metadata <- read_excel("Data_Indonesia.xls",
-                            sheet="Metadata - Indicators")
-
-data_metadata <- data_metadata %>% 
-                    select(-c(INDICATOR_CODE,SOURCE_ORGANIZATION))
 
 
-# data_world <- read_excel("Data_World.xlsx",sheet="Data")
-# names(data_world) <- make.names(names(data_world))
-# 
-# peletakan <- str_extract(names(data_world)[5:length(data_world)],"(\\d)+")
-# peletakan <- c(names(data_world)[1:4],peletakan)
-# colnames(data_world) <- peletakan
-# 
-# data_world_gdp <- data_world %>% 
-#   select(-c(Country.Code,`Series.Code`)) %>% 
-#   filter(Series.Name == "GDP per capita (current US$)") %>% 
-#   select(-c(Series.Name))
-# 
-# 
-# for(kolomku in (names(data_world_gdp)[3:dim(data_world_gdp)[2]])){
-#   data_world_gdp[[kolomku]] <- as.numeric(data_world_gdp[[kolomku]])
-# } 
+data_metadata <- reactive({
+  read_excel("Data_Indonesia.xls",sheet="Metadata - Indicators") %>% 
+    select(-c(INDICATOR_CODE,SOURCE_ORGANIZATION))})
+
+
+data_world <- read_excel("Data_World.xlsx",sheet="Data")
+names(data_world) <- make.names(names(data_world))
+
+peletakan <- str_extract(names(data_world)[5:length(data_world)],"(\\d)+")
+peletakan <- c(names(data_world)[1:4],peletakan)
+colnames(data_world) <- peletakan
+
+data_world_gdp <- data_world %>%
+  select(-c(Country.Code,`Series.Code`)) %>%
+  filter(Series.Name == "GDP per capita (current US$)") %>%
+  select(-c(Series.Name))
+
+
+for(kolomku in (names(data_world_gdp)[3:dim(data_world_gdp)[2]])){
+  data_world_gdp[[kolomku]] <- as.numeric(data_world_gdp[[kolomku]])
+}
 
 
 y_hitung = data_sheet$GDP.per.capita.current.US.

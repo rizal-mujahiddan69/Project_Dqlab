@@ -1,5 +1,5 @@
-library(shiny)
 source("analisis.R")
+library(shiny)
 
 server <- function(input, output,session) {
   # rm(list=ls())
@@ -12,11 +12,10 @@ server <- function(input, output,session) {
   })
   
   output$PlotLine <- renderPlot({
-    kol_pen <- input$kolom
-    pltku<- ggplot(data_sheet,aes(x=year,y=get(kol_pen))) + 
+    plotku <- ggplot(data_sheet,aes(x=year,y=get(input$kolom))) + 
       geom_line(size=1) + 
-      ggtitle(kol_pen) + 
-      ylab(kol_pen) + 
+      ggtitle(input$kolom) + 
+      ylab(input$kolom) + 
       theme(plot.title = element_text(size=20,hjust = 0.5,
                                       margin = margin(t = 0, r = 0, b = 25, l = 0)),
             axis.text  = element_text(size=12),
@@ -24,15 +23,14 @@ server <- function(input, output,session) {
             axis.text.y  = element_text(margin = margin(t = 0, r = 0, 
                                                         b = 0, l = 20))
             )
-      pltku
+    plotku
     })
   
   output$PlotLine2 <- renderPlot({
-    kol_pen <- input$kolom2
-    plottku <-ggplot(data_sheet,aes(x=year,y=get(kol_pen))) + 
+    ggplot(data_sheet,aes(x=year,y=get(input$kolom2))) + 
       geom_line(size=1) + 
-      ggtitle(kol_pen) + 
-      ylab(kol_pen) + 
+      ggtitle(input$kolom2) + 
+      ylab(input$kolom2) + 
       theme(plot.title = element_text(size=20,hjust = 0.5,
                                       margin = margin(t = 0, r = 0, b = 25, l = 0)),
             axis.text  = element_text(size=12),
@@ -40,7 +38,6 @@ server <- function(input, output,session) {
             axis.text.y  = element_text(margin = margin(t = 0, r = 0, 
                                                         b = 0, l = 20))
       )
-    plottku
   })
   
   output$crccf <- renderPlot({
@@ -48,7 +45,7 @@ server <- function(input, output,session) {
   })
   
   output$table_metadata <- renderDataTable({
-    data_metadata
+    data_metadata()
   })
   
   output$linearreg <- renderPlot({
