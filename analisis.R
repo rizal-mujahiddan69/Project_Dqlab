@@ -33,7 +33,7 @@ rownames(data_sheet) <- data_sheet$year
 data_sheet <- as_tibble(data_sheet)
 data_sheet <- data_sheet %>% select_if(~!all(is.na(.)))
 
-
+head(data_sheet)
 
 data_metadata <- reactive({
   read_excel("Data_Indonesia.xls",sheet="Metadata - Indicators") %>% 
@@ -76,55 +76,6 @@ dw_dia <- dwtest(linear_regression)
 koyck_model <- koyckDlm(x=x_hitung,y=y_hitung)
 summary(koyck_model)
 
-
-
-# str_json <- "geojson_world.json"
-# 
-# geojson <- readLines(str_json, warn = FALSE) %>%
-#   paste(collapse = "\n") %>%
-#   fromJSON(simplifyVector = FALSE)
-# 
-# 
-# nama_neg_geojson <- c()
-# banyak_negara <- length(geojson$features)
-# for(negara in 1:banyak_negara){
-#   nama_negara <- geojson$features[[negara]]$properties$name
-#   nama_neg_geojson <- c(nama_neg_geojson,nama_negara)
-# }
-# 
-# 
-# negaraku <- intersect(nama_neg_geojson,data_world_gdp$Country.Name)
-# data_world_gdp <- data_world_gdp %>% 
-#                     filter(Country.Name %in% negaraku)
-# 
-# banyak_negara <- length(geojson$features)
-# list_negara <- list(features=list())
-# cc <- 1
-# 
-# for(negara in 1:banyak_negara){
-#   nama_negara <- geojson$features[[negara]]$properties$name
-#   if(nama_negara %in% negaraku){
-#     list_negara$features[[cc]] <- geojson$features[[negara]]
-#     cc <- cc+1
-#   }
-# }
-# 
-# list_negara$style = list(
-#   weight = 1,
-#   color = "#555555",
-#   opacity = 1,
-#   fillOpacity = 0.8
-# )
-# 
-# 
-# banyak_negara <- length(list_negara$features)
-# for(negara in 1:banyak_negara){
-#   nama_negara <- list_negara$features[[negara]]$properties$name
-#   for(i in 1960:2020){
-#     namanya <- as.name(i)
-#     negara_tahun <- data_world_gdp %>% 
-#       filter(Country.Name == nama_negara) %>% 
-#       select(namanya)
-#     list_negara$features[[negara]]$properties$gdp_per_capita_us[[namanya]] <- negara_tahun 
-#   }
-# }
+write.csv(data_sheet,"Data_Ind.csv")
+data_world <- read_excel("Data_World.xlsx",sheet="Data")
+write.csv(data_world_gdp,"data_world_gdp.csv")

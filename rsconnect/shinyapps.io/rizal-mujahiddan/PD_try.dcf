@@ -1,0 +1,13 @@
+name: PD_try
+title: PD_try
+username:
+account: rizal-mujahiddan
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5999932
+bundleId: 5765438
+url: https://rizal-mujahiddan.shinyapps.io/PD_try/
+when: 1649141479.3981
+lastSyncTime: 1649141479.3981
+asMultiple: FALSE
+asStatic: FALSE

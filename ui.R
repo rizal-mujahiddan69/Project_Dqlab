@@ -1,5 +1,5 @@
 library(shiny)
-source("analisis.R")
+source("source_data.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -32,9 +32,8 @@ ui <- fluidPage(
                 tags$li(tags$span("Linkedin"),tags$span("Rizal Mujahiddan"))
               )
             ),
-            tags$button(onclick="location.href='https://github.com/rizal-mujahiddan69/Project_Dqlab';",type="button",
-                        class="btn btn-warning","My Github"),
-            
+            tags$button(onclick="location.href='https://github.com/rizal-mujahiddan69/PD_try';",
+                        type="button",class="btn btn-warning","My Github"), 
           )
         )
       ),
@@ -97,6 +96,11 @@ ui <- fluidPage(
     #      leafletOutput("PiePlot")
     #    )
     # ),
+    tabPanel("Letakku Plot",
+             mainPanel(
+               img(src="image/peta_gdp.png")
+            ),
+    ),
     tabPanel("Main Plot",
       mainPanel(tags$h1("Tugas"),
         plotOutput("linearreg"),
@@ -107,5 +111,5 @@ ui <- fluidPage(
         textOutput("kesimpulan")
       )
     ),
-  ),
+  )
 )
